@@ -24,14 +24,18 @@ jobs:
 
       - name: Build static files
         run: |
-          mkdir -p static
-          cp -r templates static/
-          cp -r static static/
+          # Create a new directory for the built site
+          mkdir -p _site
+          # Copy all necessary files to _site
+          cp -r templates _site/
+          cp -r static _site/
+          cp index.html _site/
+          cp requirements.txt _site/
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
+          publish_dir: ./_site
           publish_branch: gh-pages
           commit_message: "Deploy static files" 
